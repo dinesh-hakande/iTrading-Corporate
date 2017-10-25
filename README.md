@@ -1,4 +1,4 @@
-angular-dashboard
+iTrading-Corporate
 ====================
 
 Generic framework providing widgets functionality.
