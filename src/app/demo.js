@@ -19,7 +19,8 @@
 angular.module('app', [
     'ngRoute',
     'ui.dashboard',
-    'btford.markdown'
+    'btford.markdown',
+    'dx'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -33,21 +34,19 @@ angular.module('app', [
         templateUrl: 'app/template/view.html',
         controller: 'ExplicitSaveDemoCtrl',
         title: 'Menu 1',
-        description: 'This demo showcases an option to only save the dashboard state '+
-          'explicitly, e.g. by user input. Notice the "all saved" button in the controls ' +
-          'updates as you make saveable changes.'
+        description: 'Menu 1.'
       })
       .when('/layouts/explicit-saving', {
         templateUrl: 'app/template/layouts.html',
         controller: 'LayoutsDemoExplicitSaveCtrl',
         title: 'Menu 2',
-        description: 'This demo showcases dashboard layouts with explicit saving enabled.'
+        description: 'Menu 2.'
       })
       .when('/dynamic-data', {
         templateUrl: 'app/template/dynamicData.html',
         controller: 'DynamicDataCtrl',
         title: 'Menu 3',
-        description: 'This demo showcases loading the widgets and refreshing the contents as the source data is updated.'
+        description: 'Menu 3.'
       })
       .otherwise({
         redirectTo: '/'
@@ -68,6 +67,22 @@ angular.module('app', [
       {
         name: 'time',
         directive: 'wt-time'
+      },
+      {
+        name: 'Candle Stick Chart',
+        directive: 'wt-chart',
+        size: {
+          width: '70%',
+          height: '450px'
+        }
+      },
+      {
+        name: 'Blotter',
+        directive: 'wt-editablegrid',
+        size: {
+          width: '80%',
+          height: '350px'
+        }
       },
       {
         name: 'datamodel',
