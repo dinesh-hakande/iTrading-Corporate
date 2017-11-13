@@ -687,4 +687,205 @@ angular.module('app')
       }
     };
   })
+  .directive('wtForm',function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/template/form.html',
+      scope: true,
+      controller: function ($scope) {
+        // we would get this from the api
+        $scope.entity = {
+          name: "Course",
+          fields: [{
+            "type": "select",
+            "name": "instrument",
+            "label": "Instrument",
+            "options": [{
+              "name": "ESP"
+            }, {
+              "name": "RFQ"
+            }, {
+              "name": "Order"
+            }],
+            "required": true,
+            "data": ""
+          }, {
+            "type": "select",
+            "name": "settlementdate",
+            "label": "Settlement Date",
+            "options": [{
+              "name": "D+2"
+            }, {
+              "name": "D+1"
+            }, {
+              "name": "D+0"
+            }],
+            "required": true,
+            "data": ""
+          }, {
+            "type": "select",
+            "name": "currenypair",
+            "label": "",
+            "options": [{
+              "name": "EUR/USD"
+            }, {
+              "name": "AUD/USD"
+            }, {
+              "name": "CAD/USD"
+            }],
+            "required": true,
+            "data": ""
+          }, {
+            "type": "radio",
+            "name": "color_id",
+            "label": "Colors",
+            "options": [{
+              "id": 1,
+              "name": "orange"
+            }, {
+              "id": 2,
+              "name": "pink"
+            }, {
+              "id": 3,
+              "name": "gray"
+            }, {
+              "id": 4,
+              "name": "cyan"
+            }],
+            "required": true,
+            "data": "dinesh hakande"
+          }, {
+            "type": "email",
+            "name": "emailUser",
+            "label": "Email",
+            "required": true,
+            "data": ""
+          }, {
+            "type": "text",
+            "name": "city",
+            "label": "City",
+            "required": true,
+            "data": ""
+          }, {
+            "type": "password",
+            "name": "pass",
+            "label": "Password",
+            "min": 6,
+            "max": 20,
+            "required": true,
+            "data": ""
+          }, {
+            "type": "select",
+            "name": "teacher_id",
+            "label": "Teacher",
+            "options": [{
+              "name": "Mark"
+            }, {
+              "name": "Claire"
+            }, {
+              "name": "Daniel"
+            }, {
+              "name": "Gary"
+            }],
+            "required": true,
+            "data": ""
+          }, {
+            "type": "checkbox",
+            "name": "car_id",
+            "label": "Cars",
+            "options": [{
+              "id": 1,
+              "name": "bmw"
+            }, {
+              "id": 2,
+              "name": "audi"
+            }, {
+              "id": 3,
+              "name": "porche"
+            }, {
+              "id": 4,
+              "name": "jaguar"
+            }],
+            "required": true,
+            "data": ""
+          }]
+        };
+
+        $scope.submitForm = function() {
+
+        };
+      }
+    };
+  })
+  .directive('wtCard',function () {
+    return {
+      restrict: 'A',
+      replace: true,
+      templateUrl: 'app/template/card.html',
+      scope: true,
+      controller: function ($scope) {
+        // we would get this from the api
+
+        $scope.cardContents = [{
+          sellVal1 : "1.12758",
+          sellVal2 : "75",
+          sellVal3 : "8",
+          buyVal1 : "1.12762",
+          buyVal2 : "76",
+          buyVal3 : "2",
+          staticField : "10.24",
+          currencyId :"1",
+          currency : [{
+            id: "1",
+            name: "EURO/USD"
+          }, {
+            id: "2",
+            name: "CAD"
+          }, {
+            id: "3",
+            name: "INR"
+          }, {
+            id: "4",
+            name: "JPY"
+          }]
+        },
+          {
+            sellVal1 : "2.144758",
+            sellVal2 : "34",
+            sellVal3 : "10",
+            buyVal1 : "2.345",
+            buyVal2 : "36",
+            buyVal3 : "2",
+            staticField : "234.23",
+            currencyId :"1",
+            currency : [{
+              id: "1",
+              name: "AUD/USD"
+            }, {
+              id: "2",
+              name: "DAC"
+            }, {
+              id: "3",
+              name: "PAK"
+            }, {
+              id: "4",
+              name: "RMB"
+            }]
+          } ];
+
+        $scope.showBuy = function() {
+        };
+
+        $scope.showSell = function() {
+        };
+
+
+        $scope.greenClick = function() {
+        };
+
+
+      }
+    };
+  })
 ;

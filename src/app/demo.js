@@ -20,7 +20,8 @@ angular.module('app', [
     'ngRoute',
     'ui.dashboard',
     'btford.markdown',
-    'dx'
+    'dx',
+    'ngMaterial'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -85,43 +86,61 @@ angular.module('app', [
         }
       },
       {
-        name: 'datamodel',
-        directive: 'wt-scope-watch',
-        dataAttrName: 'value',
-        dataModelType: RandomDataModel
-      },
-      {
-        name: 'resizable',
-        templateUrl: 'app/template/resizable.html',
-        attrs: {
-          class: 'demo-widget-resizable'
-        }
-      },
-      {
-        name: 'fluid',
-        directive: 'wt-fluid',
+        name :'Form',
+        directive: 'wt-form',
         size: {
-          width: '50%',
-          height: '250px'
+          width: '80%',
+          height: '350px'
         }
+      },
+      {
+        name :'Card',
+        directive: 'wt-card'
       }
+      // {
+      //   name: 'datamodel',
+      //   directive: 'wt-scope-watch',
+      //   dataAttrName: 'value',
+      //   dataModelType: RandomDataModel
+      // },
+      // {
+      //   name: 'resizable',
+      //   templateUrl: 'app/template/resizable.html',
+      //   attrs: {
+      //     class: 'demo-widget-resizable'
+      //   }
+      // },
+      // {
+      //   name: 'fluid',
+      //   directive: 'wt-fluid',
+      //   size: {
+      //     width: '50%',
+      //     height: '250px'
+      //   }
+      // }
     ];
   })
   .value('defaultWidgets', [
-    { name: 'random' },
-    { name: 'time' },
-    { name: 'datamodel' },
     {
       name: 'random',
       style: {
-        width: '50%',
-        minWidth: '39%'
+        width: '30%',
+        minWidth: '39%',
+        height :'500px'
       }
     },
     {
-      name: 'time',
+      name: 'Candle Stick Chart',
       style: {
-        width: '50%'
+        width: '60%',
+        height :'500px'
+      }
+    },
+    {
+      name: 'Blotter',
+      size: {
+        width: '100%',
+        height: '350px'
       }
     }
   ])
