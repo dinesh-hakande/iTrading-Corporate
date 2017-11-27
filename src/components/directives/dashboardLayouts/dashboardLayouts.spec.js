@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 'use strict';
 
@@ -85,7 +70,7 @@ describe('Directive: dashboard-layouts', function () {
     };
     $rootScope.value = 10;
 
-    // element setup 
+    // element setup
     element = $compile('<div dashboard-layouts="dashboardOptions"></div>')($rootScope);
     $rootScope.$digest();
     childScope = element.scope();
@@ -134,7 +119,7 @@ describe('Directive: dashboard-layouts', function () {
     element = $compile('<div dashboard-layouts="dashboardOptions"></div>')($rootScope);
     $rootScope.$digest();
     childScope = element.scope();
-    
+
     var layouts = childScope.layouts;
     var active;
     for (var i = 0; i < layouts.length; i++) {
@@ -184,7 +169,7 @@ describe('Directive: dashboard-layouts', function () {
   });
 
   describe('the removeLayout method', function() {
-    
+
     it('should call the remove and save methods of LayoutStorage', function() {
       spyOn(LayoutStorage.prototype, 'remove');
       spyOn(LayoutStorage.prototype, 'save');
@@ -213,7 +198,7 @@ describe('Directive: dashboard-layouts', function () {
     });
 
     describe('when there are unsaved changes on the current dashboard', function() {
-      
+
       var current, options, successCb, errorCb, layout;
 
       beforeEach(function() {
@@ -351,7 +336,7 @@ describe('Directive: dashboard-layouts', function () {
       galSpy = spyOn(LayoutStorage.prototype, 'getActiveLayout').and;
       galSpy.returnValue(mockDash);
     });
-    
+
     describe('the addWidget method', function() {
 
       it('should call dashboard.addWidget method of the active layout', function() {

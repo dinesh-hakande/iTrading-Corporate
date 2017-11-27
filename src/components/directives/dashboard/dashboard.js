@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 'use strict';
 
 angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable']);
@@ -29,6 +14,68 @@ angular.module('ui.dashboard')
       scope: true,
 
       controller: ['$scope', '$attrs', function (scope, attrs) {
+
+        var autocompleteWidgets = ["card","blotter","form","Candle Stick Chart"];
+
+        scope.autocomplete = {
+          withClearButton: {
+            dataSource: autocompleteWidgets,
+            placeholder: "Type Widget Name to Add..",
+            showClearButton: true,
+            onValueChanged: function(data) {
+                if(data.value === "form")
+                {
+                  var widget =  {
+                    name :'Form',
+                    directive: 'wt-form',
+                    size: {
+                      width: '25%',
+                      height: '350px'
+                    }
+                  };
+                  scope.prependWidget(widget,false);
+                }
+                else if(data.value === "card")
+                {
+                  data = null;
+                  var widgets =  {
+                    name :'Card',
+                    directive: 'wt-card',
+                    size: {
+                      width: '25%',
+                      height: '350px'
+                    }
+                  };
+                  scope.prependWidget(widgets,false);
+                }
+                else if(data.value === "blotter")
+                {
+                  var widgetss =  {
+                    name :'Blotter',
+                    directive: 'wt-editablegrid',
+                    size: {
+                      width: '75%',
+                      height: '350px'
+                    }
+                  };
+                  scope.addWidget(widgetss,false);
+                }
+                else if(data.value === "chart")
+                {
+                  var widgetsss =  {
+                    name :'Candle Stick Chart',
+                    directive: 'wt-chart',
+                    size: {
+                      width: '75%',
+                      height: '350px'
+                    }
+                  };
+                  scope.addWidget(widgetsss,false);
+                }
+
+            }
+          }
+        };
         // default options
         var defaults = {
           stringifyStorage: true,
@@ -125,6 +172,7 @@ angular.module('ui.dashboard')
           return widget;
         };
 
+
         /**
          * Instantiates a new widget and insert it a beginning of dashboard
          */
@@ -155,7 +203,7 @@ angular.module('ui.dashboard')
          */
         scope.openWidgetSettings = function (widget) {
 
-          // Set up $uibModal options 
+          // Set up $uibModal options
           var options = _.defaults(
             { scope: scope },
             widget.settingsModalOptions,
@@ -167,7 +215,7 @@ angular.module('ui.dashboard')
               return widget;
             }
           };
-          
+
           // Create the modal
           var modalInstance = $uibModal.open(options);
           var onClose = widget.onSettingsClose || scope.options.onSettingsClose;
@@ -184,7 +232,7 @@ angular.module('ui.dashboard')
               scope.$emit('widgetChanged', widget);
             },
             function (reason) {
-              
+
               // Call the dismiss callback
               onDismiss(reason, scope);
 

@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2014 DataTorrent, Inc. ALL Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 'use strict';
 
@@ -614,6 +599,10 @@ angular.module('app')
 
         $scope.dataGridOptions = {
           dataSource: employees,
+          selection: {
+            mode:"single"
+          },
+          hoverStateEnabled:true,
           paging: {
             enabled: true,
             pageSize: 5
@@ -624,8 +613,7 @@ angular.module('app')
           editing: {
             mode: "row",
             allowUpdating: true,
-            allowDeleting: true,
-            allowAdding: true
+            allowDeleting: true
           },
           columns: [
             {
@@ -655,6 +643,22 @@ angular.module('app')
           onEditingStart: function(e) {
             logEvent("EditingStart");
           },
+          onCellPrepared: function(e) {
+            if(e.rowType === "data" && e.column.command === "edit") {
+              var isEditing = e.row.isEditing,
+                $links = e.cellElement.find(".dx-link");
+
+              $links.text("");
+
+              if(isEditing){
+                $links.filter(".dx-link-save").addClass("dx-icon-save");
+                $links.filter(".dx-link-cancel").addClass("dx-icon-revert");
+              } else {
+                $links.filter(".dx-link-edit").addClass("dx-icon-edit");
+                $links.filter(".dx-link-delete").addClass("dx-icon-trash");
+              }
+            }
+          },
           onInitNewRow: function(e) {
             logEvent("InitNewRow");
           },
@@ -675,6 +679,18 @@ angular.module('app')
           },
           onRowRemoved: function(e) {
             logEvent("RowRemoved");
+          },
+          onSelectionChanged: function (selectedItems) {
+            $scope.selectedGrid = selectedItems.selectedRowsData[0];
+            var widget =  {
+              name :'Form',
+              directive: 'wt-form',
+              size: {
+                width: '30%',
+                height: '350px'
+              }
+            };
+            $scope.options.addWidget(widget,false);
           }
         };
         $scope.buttonOptions = {
@@ -698,18 +714,18 @@ angular.module('app')
         $scope.entity = {
           name: "Course",
           fields: [{
-            "type": "select",
-            "name": "instrument",
-            "label": "Instrument",
-            "options": [{
-              "name": "ESP"
-            }, {
-              "name": "RFQ"
-            }, {
-              "name": "Order"
-            }],
-            "required": true,
-            "data": ""
+              "type": "select",
+              "name": "instrument",
+              "label": "Instrument",
+              "options": [{
+                "name": "ESP"
+              }, {
+                "name": "RFQ"
+              }, {
+                "name": "Order"
+              }],
+              "required": true,
+              "data": ""
           }, {
             "type": "select",
             "name": "settlementdate",
@@ -818,7 +834,7 @@ angular.module('app')
       }
     };
   })
-  .directive('wtCard',function () {
+  .directive('wtCard',function ($interval) {
     return {
       restrict: 'A',
       replace: true,
@@ -826,13 +842,39 @@ angular.module('app')
       scope: true,
       controller: function ($scope) {
         // we would get this from the api
+        //$scope.isVisible = true;
+        $scope.openTradeWidget = function ($index) {
+          var cardContent = $scope.cardContents[$index];
+          //$scope.isVisible = !$scope.isVisible;
+          var widget =  {
+            name :'Form',
+            directive: 'wt-form',
+            size: {
+              width: '25%',
+              height: '350px'
+            },
+            param : cardContent
+          };
+          $scope.hideCurrentWidget($scope.options.currentWidgets, "Card");
+          if(!$scope.checkCurrentWidgetIfPresent($scope.options.currentWidgets,widget.name)) {
+            $scope.options.prependWidget(widget, true);
+          }
+
+        };
+
+        $scope.selectedIndex = -1; // Whatever the default selected index is, use -1 for no selection
+
+        $scope.itemClicked = function ($index) {
+          $scope.selectedIndex = $index;
+        };
 
         $scope.cardContents = [{
-          sellVal1 : "1.12758",
+          "name" : "EURO/USD FXO",
+          sellVal1 : "1.12",
           sellVal2 : "75",
           sellVal3 : "8",
-          buyVal1 : "1.12762",
-          buyVal2 : "76",
+          buyVal1 : "1.12",
+          buyVal2 : "80",
           buyVal3 : "2",
           staticField : "10.24",
           currencyId :"1",
@@ -851,11 +893,12 @@ angular.module('app')
           }]
         },
           {
-            sellVal1 : "2.144758",
-            sellVal2 : "34",
-            sellVal3 : "10",
-            buyVal1 : "2.345",
-            buyVal2 : "36",
+            "name" : "EURO/USD FXO",
+            sellVal1 : "2.15",
+            sellVal2 : "20",
+            sellVal3 : "1",
+            buyVal1 : "2.20",
+            buyVal2 : "25",
             buyVal3 : "2",
             staticField : "234.23",
             currencyId :"1",
@@ -872,7 +915,79 @@ angular.module('app')
               id: "4",
               name: "RMB"
             }]
-          } ];
+          },
+          {
+            "name" : "EURO/USD FXO",
+            sellVal1 : "2.15",
+            sellVal2 : "20",
+            sellVal3 : "1",
+            buyVal1 : "2.20",
+            buyVal2 : "25",
+            buyVal3 : "2",
+            staticField : "234.23",
+            currencyId :"1",
+            currency : [{
+              id: "1",
+              name: "AUD/USD"
+            }, {
+              id: "2",
+              name: "DAC"
+            }, {
+              id: "3",
+              name: "PAK"
+            }, {
+              id: "4",
+              name: "RMB"
+            }]
+          },
+          {
+            "name" : "EURO/USD FXO",
+            sellVal1 : "2.15",
+            sellVal2 : "20",
+            sellVal3 : "1",
+            buyVal1 : "2.20",
+            buyVal2 : "25",
+            buyVal3 : "2",
+            staticField : "234.23",
+            currencyId :"1",
+            currency : [{
+              id: "1",
+              name: "AUD/USD"
+            }, {
+              id: "2",
+              name: "DAC"
+            }, {
+              id: "3",
+              name: "PAK"
+            }, {
+              id: "4",
+              name: "RMB"
+            }]
+          },
+          {
+            "name" : "EURO/USD FXO",
+            sellVal1 : "2.15",
+            sellVal2 : "20",
+            sellVal3 : "1",
+            buyVal1 : "2.20",
+            buyVal2 : "25",
+            buyVal3 : "2",
+            staticField : "234.23",
+            currencyId :"1",
+            currency : [{
+              id: "1",
+              name: "AUD/USD"
+            }, {
+              id: "2",
+              name: "DAC"
+            }, {
+              id: "3",
+              name: "PAK"
+            }, {
+              id: "4",
+              name: "RMB"
+            }]
+          }];
 
         $scope.showBuy = function() {
         };
@@ -880,6 +995,25 @@ angular.module('app')
         $scope.showSell = function() {
         };
 
+        $scope.checkCurrentWidgetIfPresent = function(currentWidgets, widgetName)
+        {
+          angular.forEach(currentWidgets, function (value, key) {
+              if(value.name === widgetName){
+                return true;
+              }
+          });
+          return false;
+        };
+
+        $scope.hideCurrentWidget = function(currentWidgets, widgetName)
+        {
+          angular.forEach(currentWidgets, function (value, key) {
+            if(value.name === widgetName){
+              value.isWidgetVisible = false;
+              return;
+            }
+          });
+        };
 
         $scope.greenClick = function() {
         };

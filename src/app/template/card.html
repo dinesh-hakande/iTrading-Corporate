@@ -1,41 +1,48 @@
-<div>
-  <md-card style="max-height: 150px !important; max-width: 350px; " ng-repeat="cardContent in cardContents">
-    <div layout = "row" layout-xs = "column">
-      <div style = " color:black;text-align:center; background: aqua;">
-        <div layout="column" layout-xs="column">
-          <div layout="row" layout-xs="column">
-            <div>
-              <select ng-model="cardContent.currencyId" ng-options="currency.id as currency.name for currency in cardContent.currency">
-              </select>
-            </div>
-            <div style="width: 100%;">{{cardContent.staticField}} </div>
+<div class="cardhorizontal">
+  <md-card ng-repeat="cardContent in cardContents" class="cardfonttheme" ng-class="{ 'carddelete': $index == selectedIndex }"">
+    <div layout = "row" layout-sm = "column">
+      <div layout="column" layout-xs="column">
+        <div layout="row" layout-xs="column">
+          <div class="cardfontsize">
+            <select class="carddropdown" ng-model="cardContent.currencyId" ng-options="currency.id as currency.name for currency in cardContent.currency"></select>
           </div>
-          <div layout = "row" layout-xs = "column">
-            <div flex="40"> <md-button style = "height:120px;padding: 0 !important;white-space: rap !important;margin: 0; border: none;" ng-click="showSell()"><div style= "background-color:blue; height: 120px; text-align: center;  color: white;"> SELL</div></md-button> </div>
-
-            <div flex="40" style = "color:black;text-align:center;background:gray;max-height: 120px; border-left-width: 1px;border-left-color: aqua !important;  border-left: solid;">
-              <div layout = "column" layout-xs = "row">
-                <div style = "font-size: 20px; color: blue; "> {{cardContent.sellVal1}} </div>
-                <div layout = "row" layout-xs= "column">
-                  <div style = "font-size: 50px; color: blue; ">{{cardContent.sellVal2}}</div>
-                  <div style = "font-size: 10px; color: blue; "> {{cardContent.sellVal3}}</div>
-                </div>
-              </div>
+          <div class = "cardname">{{cardContent.name}}</div>
+          <a href="" class="cardfloatright" ng-click="openTradeWidget($index)">
+            <md-icon class="glyphicon glyphicon-info-sign cardicontheme"></md-icon>
+          </a>
+          <a href="" class="cardfloatright" ng-click="itemClicked($index)">
+            <md-icon class="glyphicon glyphicon-remove cardicontheme"></md-icon>
+          </a>
+        </div>
+        <div layout = "row" layout-xs = "column">
+          <span class="cardbidcolumn">
+            <div flex="30" class="cardbidrow">
+                <div><b>SELL</b></div>
+                <div class="smallint">{{cardContent.sellVal1}}</div>
             </div>
-            <div  flex="40" style = "color:black;text-align:center;max-height: 120px;background:gray;border-left-width: 1px; border-left-color: aqua !important; border-left: solid;">
-              <div layout = "column" layout-xs = "row">
-                <div style = "font-size: 20px; color: blue; "> {{cardContent.buyVal1}} </div>
-                <div layout = "row" layout-xs= "column">
-                  <div style = "font-size: 50px; color: blue; ">{{cardContent.buyVal2}}</div>
-                  <div style = "font-size: 10px; color: blue; "> {{cardContent.buyVal3}}</div>
-                </div>
-              </div>
+            <div class="bigint">
+                {{cardContent.sellVal2}}
             </div>
-            <div flex="40"><md-button style = "height:120px;padding: 0 !important; white-space: rap !important;margin: 0; border: none; " ng-click="showBuy()"> <div style= "background-color:blue; height: 120px;  text-align: center; color: white;">BUY</div></md-button></div>
-          </div>
+            <!--<div class="smallint">-->
+                <!--{{cardContent.sellVal3}}-->
+            <!--</div>-->
+          </span>
+          <span class="cardbidcolumn">
+            <div flex="30" class="cardbidrow">
+              <div><b>BUY</b></div>
+              <div class="smallint">{{cardContent.buyVal1}}</div>
+            </div>
+            <div class="bigint">
+              <div>{{cardContent.buyVal2}}</div>
+            </div>
+          </span>
+    </div>
+        <div layout= "row" layout-xs = "column">
+          <label class = "cardfooterlabel">Vol : </label>
+          <input type="text" class="cardfooterText" value="1000000">
+          <md-icon class="glyphicon glyphicon-stats cardicontheme cardfloatright" ng-click = "openChartWidget($index)"" ></md-icon>
         </div>
       </div>
-      <div><md-button style=" height:120px;padding: 0 !important;white-space: rap !important;margin: 0;border: none;background: green; text-align: center;min-width: 8px !important; height: 150px !important;" ng-click="greenClick()"><div style= "color: white;transform: rotate(270deg);">CHART</div></md-button></div>
     </div>
   </md-card>
 </div>

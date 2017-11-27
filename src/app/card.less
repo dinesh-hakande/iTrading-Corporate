@@ -1,0 +1,123 @@
+@cardbackgroundcolor : #08146b;
+@cardfontcolor : white;
+@bigintcolor : cyan;
+
+.cardname {
+  margin-left: 4px;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.cardfontsize{
+  background-color: @cardbackgroundcolor;
+  font-size: 12px;
+  margin-right: auto;
+}
+
+.cardfloatright{
+  float: right;
+}
+
+.cardfloatleft{
+  float: left;
+}
+
+.cardfonttheme{
+  background-color: @cardbackgroundcolor;
+  //max-width: 300px;
+  //max-height: 120px;
+  font-size: 13px;
+  color: @cardfontcolor;
+  //min-width: 200px;
+}
+
+.cardbidcolumn {
+   column-count: 2;
+   margin-right: 15px;
+   text-transform: capitalize;
+   cursor: pointer;
+   box-sizing: border-box;
+  &:hover{
+    background-color: black;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+   // max-height: 54px;
+  }
+ }
+
+.cardbidrow {
+  padding: 5px;
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.cardbgcolor{
+  background-color: @cardbackgroundcolor;
+}
+
+.cardhorizontal {
+  display: inline-flex;
+  -webkit-flex-flow: row wrap;
+  -moz-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+
+.panel-body {
+  padding: 2px !important;
+}
+
+.cardicontheme {
+  color: @cardfontcolor;
+  margin-right: -2px;
+}
+
+.carddropdown {
+  background-color: @cardbackgroundcolor;
+}
+
+.carddelete {
+  display: none;
+}
+
+.bigint {
+  font-size: 40px;
+  color: @bigintcolor;
+  margin-left: -7px;
+}
+
+.smallint {
+  margin-left: 14px;
+  color: goldenrod;
+  font-size: 12px;
+}
+
+.cardfooterlabel {
+  float: left;
+  padding-right: 10px;
+  padding-bottom: 1px;
+}
+
+.cardfooterText {
+  float: left;
+  padding: 0 0 0 3px;
+  background: transparent;
+  border: none;
+  border-bottom: 0px solid transparent;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  width: 100px;
+  -webkit-appearance: textfield;
+  -webkit-rtl-ordering: logical;
+  cursor: auto;
+  margin-bottom: 2px;
+  &:hover {
+    border-bottom: 1px solid @bigintcolor;
+  };
+  &:focus {
+    border-bottom: 1px solid @bigintcolor;
+  }
+
+}

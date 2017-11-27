@@ -12,22 +12,29 @@
               </ul>
             </span>
     </div>
-        <div class="btn-group" ng-if="options.widgetButtons">
-            <button ng-repeat="widget in widgetDefs"
-                    ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
-                {{widget.name}}
-            </button>
-        </div>
+        <!--<div class="btn-group" ng-if="options.widgetButtons">-->
+            <!--<button ng-repeat="widget in widgetDefs"-->
+                    <!--ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">-->
+                <!--{{widget.name}}-->
+            <!--</button>-->
+        <!--</div>-->
+      <div class="dx-field-value" style="float: left; margin-left: 6px; width: 80%">
+        <div dx-autocomplete="autocomplete.withClearButton"></div>
+      </div>
 
-        <button class="btn btn-warning" ng-click="resetWidgetsToDefault()">Default Widgets</button>
+        <button class="btn btn-warning" ng-click="resetWidgetsToDefault()" style="float:right; margin-right: 65px">
+          <span class="glyphicon glyphicon-th-large"></span>
+        </button>
 
-        <button ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>
+        <!--<button ng-if="options.storage && options.explicitSave" ng-click="options.saveDashboard()" class="btn btn-success" ng-disabled="!options.unsavedChangeCount">{{ !options.unsavedChangeCount ? "all saved" : "save changes (" + options.unsavedChangeCount + ")" }}</button>-->
 
-        <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
+        <button ng-click="clear();" type="button" class="btn btn-info" style="float:right;">
+          <span class="glyphicon glyphicon-repeat"></span>
+        </button>
     </div>
 
     <div ui-sortable="sortableOptions" ng-model="widgets" class="dashboard-widget-area">
-        <div ng-repeat="widget in widgets" ng-style="widget.containerStyle" class="widget-container" widget>
+        <div ng-repeat="widget in widgets" ng-style="widget.containerStyle" class="widget-container" widget ng-show="widget.isWidgetVisible">
             <div class="widget panel panel-default">
                 <div class="widget-header panel-heading">
                     <h3 class="panel-title">
